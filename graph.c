@@ -26,6 +26,16 @@ GRAFO *criar_grafo(int numVertices){
     return NULL;
 }
 
+int existe_aresta(GRAFO *G, int vertice1, int vertice2){
+    if(G == NULL || vertice1 < 0 || vertice1 >= G->numVertices || vertice2 < 0 || vertice2 >= G->numVertices){
+        return 0;
+    }
+    if(G->matrizGrafo[vertice1][vertice2] > -1){
+        return 1;
+    }
+    return 0;
+}
+
 void print_info_grafo(GRAFO *G){
     printf("V = [");
     for(int i = 0; i < G->numVertices; i++){
