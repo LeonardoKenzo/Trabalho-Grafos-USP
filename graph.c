@@ -31,18 +31,15 @@ int *vertices_vizinhos(GRAFO *G, int vertice){
         return NULL;
     }
     int qtd_vizinhos = 0;
-    for(int i = 0; i < G->numVertices; i++){ //Percorre a linha correspondente ao vértice na matriz de adjacência
-        if(G->matrizGrafo[vertice][i] > -1){  //Se o valor for > -1 existe uma aresta entre o vertice e "i"
-            qtd_vizinhos++;
-        }
-    }
-    int *vizinhos = (int *)calloc(qtd_vizinhos + 1) * sizeof(int));  //Aloca memória para armazenar os vizinhos e +1 para colocar um marcador de fim (-1)
+    int *vizinhos = (int *)calloc((qtd_vizinhos + 1), sizeof(int));  //Aloca memória para armazenar os vizinhos e +1 para colocar um marcador de fim (-1)
     if(vizinhos == NULL){
         return NULL;
     }
+    
     int j = 0;
-    for(int i = 0; i < G->numVertices; i++){ //Preenche o vetor com os índices dos vizinhos
-        if(G->matrizGrafo[vertice][i] > -1){
+    for(int i = 0; i < G->numVertices; i++){ //Percorre a linha correspondente ao vértice na matriz de adjacência
+        if(G->matrizGrafo[vertice][i] > -1){  //Se o valor for > -1 existe uma aresta entre o vertice e "i"
+            qtd_vizinhos++;
             vizinhos[j] = i;
             j++;
         }
@@ -56,7 +53,7 @@ int existe_aresta(GRAFO *G, int vertice1, int vertice2){
         return 0;
     }
     if(G->matrizGrafo[vertice1][vertice2] > -1){ //Verifica se há aresta ligando eles(-1 seria se NÃO estivissem ligadas)
-        return 1; //
+        return 1;
     }
     return 0;
 }
