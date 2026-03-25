@@ -50,12 +50,12 @@ int *vertices_vizinhos(GRAFO *G, int vertice){
 
 int existe_aresta(GRAFO *G, int vertice1, int vertice2){
     if(G == NULL || vertice1 < 0 || vertice1 >= G->numVertices || vertice2 < 0 || vertice2 >= G->numVertices){ //Verifica se o grafo existe OU se qualquer um dos vértices não pertence ao grafo
-        return 0;
-    }
-    if(G->matrizGrafo[vertice1][vertice2] > -1){ //Verifica se há aresta ligando eles(-1 seria se NÃO estivissem ligadas)
         return 1;
     }
-    return 0;
+    if(G->matrizGrafo[vertice1][vertice2] > -1){ //Verifica se há aresta ligando eles(-1 seria se NÃO estivissem ligadas)
+        return 0;
+    }
+    return 1;
 }
 
 int vertice_mais_vizinhos(GRAFO *G){
@@ -78,6 +78,20 @@ int vertice_mais_vizinhos(GRAFO *G){
     }
     return vertice_max;
 }
+
+void add_aresta(GRAFO *G, int vertice1, int vertice2, int pesoAresta){
+    if(existe_aresta(G, vertice1, vertice2)) //Se a aresta ja tiver um valor
+        G->matrizGrafo[vertice1][vertice2] = pesoAresta;
+    else if(vertice1 > 0 || vertice1 <= G->numVertices || vertice2 > 0 || vertice2 <= G->numVertices) //Se a aresta for -1
+        G->matrizGrafo[vertice1][vertice2] = pesoAresta;
+    return;
+}
+
+void remove_aresta(GRAFO *G, int vertice1, int vertice2){
+    if(existe_aresta(G, vertice1, vertice2))
+        G->matrizGrafo[vertice1][vertice2] = -1;
+}
+
 
 void print_info_grafo(GRAFO *G){
     printf("V = [");
