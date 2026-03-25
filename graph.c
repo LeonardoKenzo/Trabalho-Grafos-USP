@@ -38,7 +38,7 @@ int *vertices_vizinhos(GRAFO *G, int vertice){
     
     int j = 0;
     for(int i = 0; i < G->numVertices; i++){ //Percorre a linha correspondente ao vértice na matriz de adjacência
-        if(G->matrizGrafo[vertice][i] > -1){  //Se o valor for > -1 existe uma aresta entre o vertice e "i"
+        if(G->matrizGrafo[vertice - 1][i] > -1){  //Se o valor for > -1 existe uma aresta entre o vertice e "i"
             qtd_vizinhos++;
             vizinhos[j] = i;
             j++;
@@ -49,10 +49,10 @@ int *vertices_vizinhos(GRAFO *G, int vertice){
 }
 
 int existe_aresta(GRAFO *G, int vertice1, int vertice2){
-    if(G == NULL || vertice1 < 0 || vertice1 >= G->numVertices || vertice2 < 0 || vertice2 >= G->numVertices){ //Verifica se o grafo existe OU se qualquer um dos vértices não pertence ao grafo
+    if(G == NULL || vertice1 - 1 < 0 || vertice1 - 1 >= G->numVertices || vertice2 - 1 < 0 || vertice2 - 1 >= G->numVertices){ //Verifica se o grafo existe OU se qualquer um dos vértices não pertence ao grafo
         return 1;
     }
-    if(G->matrizGrafo[vertice1][vertice2] > -1){ //Verifica se há aresta ligando eles(-1 seria se NÃO estivissem ligadas)
+    if(G->matrizGrafo[vertice1 - 1][vertice2 - 1] > -1){ //Verifica se há aresta ligando eles(-1 seria se NÃO estivissem ligadas)
         return 0;
     }
     return 1;
@@ -76,20 +76,20 @@ int vertice_mais_vizinhos(GRAFO *G){
             vertice_max = i;
         }
     }
-    return vertice_max;
+    return vertice_max - 1;
 }
 
 void add_aresta(GRAFO *G, int vertice1, int vertice2, int pesoAresta){
     if(existe_aresta(G, vertice1, vertice2)) //Se a aresta ja tiver um valor
-        G->matrizGrafo[vertice1][vertice2] = pesoAresta;
+        G->matrizGrafo[vertice1 - 1][vertice2 - 1] = pesoAresta;
     else if(vertice1 > 0 || vertice1 <= G->numVertices || vertice2 > 0 || vertice2 <= G->numVertices) //Se a aresta for -1
-        G->matrizGrafo[vertice1][vertice2] = pesoAresta;
+        G->matrizGrafo[vertice1 - 1][vertice2 - 1] = pesoAresta;
     return;
 }
 
 void remove_aresta(GRAFO *G, int vertice1, int vertice2){
     if(existe_aresta(G, vertice1, vertice2))
-        G->matrizGrafo[vertice1][vertice2] = -1;
+        G->matrizGrafo[vertice1 - 1][vertice2 - 1] = -1;
 }
 
 
@@ -97,23 +97,25 @@ void print_info_grafo(GRAFO *G){
     printf("V = [");
     for(int i = 0; i < G->numVertices; i++){
         if(i == G->numVertices - 1){
-            printf("%d]\n", i);
+            printf("%d]\n", i + 1);
             break;
         }
-        printf("%d, ", i);
+        printf("%d, ", i + 1);
     }
 
     printf("E = [");
     for(int i = 0; i < G->numVertices; i++){
         for (int j = 0; j < G->numVertices; j++)
         {
-            if(G->matrizGrafo[i][j] > -1)
-                printf("(%d, %d)", i, j);
+            if(G->matrizGrafo[i][j] > -1){
+                printf("(%d, %d)", i + 1, j + 1);
+                if(i != G->numVertices - 1 && j != G->numVertices - 1)
+                    printf(", ");
+            }
             if(i == G->numVertices - 1 && j == G->numVertices - 1){
                 printf("]");
                 break;
             }
-            printf(", ");
         }
     }
 }
