@@ -34,7 +34,7 @@ int *vertices_vizinhos(GRAFO *G, int vertice){
         return NULL;
     }
     int qtd_vizinhos = 0;
-    // Primeiro, contamos quantos vizinhos existem
+    // contar quantos vizinhos existem
     for(int i = 0; i < G->numVertices; i++){
         if(G->matrizGrafo[vertice - 1][i] > -1) qtd_vizinhos++;
     }
@@ -46,7 +46,7 @@ int *vertices_vizinhos(GRAFO *G, int vertice){
     int j = 0;
     for(int i = 0; i < G->numVertices; i++){
         if(G->matrizGrafo[vertice - 1][i] > -1){
-            vizinhos[j++] = i + 1; // Guardamos o nome do vértice (1 a N)
+            vizinhos[j++] = i + 1; // Guardar o nome do vértice (1 a N)
         }
     }
     vizinhos[j] = -1; // Marcador de fim
