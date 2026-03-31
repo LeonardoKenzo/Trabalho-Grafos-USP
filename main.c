@@ -53,6 +53,19 @@ int *vertices_vizinhos(GRAFO *G, int vertice){
     return vizinhos;
 }
 
+int quantos_vizinhos(GRAFO *G, int vertice){
+    if(G == NULL || vertice < 1 || vertice > G->numVertices){
+        printf("Erro ao achar quantidade de vizinhos!\n");
+        return -1;
+    }
+    int qtd_vizinhos = 0;
+    // contar quantos vizinhos existem
+    for(int i = 0; i < G->numVertices; i++){
+        if(G->matrizGrafo[vertice - 1][i] > -1) qtd_vizinhos++;
+    }
+    return qtd_vizinhos;
+}
+
 int existe_aresta(GRAFO *G, int vertice1, int vertice2){
     if(G == NULL || vertice1 < 1 || vertice1 > G->numVertices || vertice2 < 1 || vertice2 > G->numVertices){ //Verifica se o grafo existe OU se qualquer um dos vértices não pertence ao grafo
         return 0;
@@ -200,8 +213,13 @@ int main(void){
                 print_matriz_adjacencia(G);
                 print_status = 0;
                 break;
-                default:
-                    printf("unrecognized option %d!\n", option);
+            case 6:
+                int vertice = vertice_mais_vizinhos(G);
+                printf("max vertex: %d", vertice);
+                print_status = 0;
+                break;
+            default:
+                printf("unrecognized option %d!\n", option);
         }
         scanf(" %d", &option);
     }
